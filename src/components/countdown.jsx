@@ -12,7 +12,7 @@ function calculateTimeLeft(targetDate) {
     timeLeft = {
       days: Math.floor(difference / (1000 * 60 * 60 * 24)),
       hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / (1000 / 60)) % 60),
+      minutes: Math.floor((difference / (1000 * 60)) % 60),
       seconds: Math.floor((difference / 1000) % 60),
     }
   }
@@ -20,8 +20,8 @@ function calculateTimeLeft(targetDate) {
   return timeLeft
 }
 
-export default function Countdown() {
-  const targetDate = new Date("2025-04-29T00:00:00")  // <<< 🎯 Fixed here!
+export default function Countdown({onCountdownEnd} ) {
+  const targetDate = new Date("2025-04-28T00:00:00")  // <<< 🎯 Fixed here!
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate))
 
@@ -30,7 +30,11 @@ export default function Countdown() {
       const updated = calculateTimeLeft(targetDate)
 
       setTimeLeft(updated)
+      if (!updated || Object.keys(updated).length <= 0) {
+        onCountdownEnd()
+      }
     }, 1000)
+
 
     return () => clearTimeout(timer)
   }, [timeLeft, targetDate])
