@@ -19,7 +19,7 @@ function calculateTimeLeft(targetDate) {
 
   return timeLeft
 }
-//countdown date
+//countdown
 export default function Countdown({onCountdownEnd} ) {
   const targetDate = new Date("2025-04-29T00:00:00")  // <<< 🎯 Fixed here!
 
